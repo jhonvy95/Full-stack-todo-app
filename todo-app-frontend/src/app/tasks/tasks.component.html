@@ -1,10 +1,13 @@
-<p>tasks works!</p>
+<div class="container d-flex flex-column align-items-center mt-5">
+  <h1 class="text-center mb-4">Task List</h1>
 
-<h1>Task List</h1>
+  <div class="mb-4">
+    <button mat-raised-button color="primary" (click)="openTodoDialog()">
+      Add Todo
+    </button>
+  </div>
 
-<!-- Botón para agregar nueva tarea -->
-<div class="mb-4">
-  <button mat-raised-button color="primary" (click)="openTodoDialog()">
-    Add Todo
-  </button>
+  <div class="w-100">
+    <app-task-list [tasks]="tasks"></app-task-list>
+  </div>
 </div>

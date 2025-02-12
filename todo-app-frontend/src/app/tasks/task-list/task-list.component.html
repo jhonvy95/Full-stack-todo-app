@@ -1,0 +1,35 @@
+<div class="container d-flex flex-column align-items-center mt-5 gap-3">
+  @for (task of tasks; track $index) {
+
+  <div class="full-width d-flex gap-3 shadow-sm p-3 rounded">
+    <mat-form-field>
+      <mat-label>Status</mat-label>
+      <mat-select
+        [value]="task.status"
+        (selectionChange)="onStatusChange(task, $event.value)"
+      >
+        <mat-option *ngFor="let status of statusOptions" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="flex-grow-1" style="width: 250px">
+      <h4 class="fs-5">{{ task.title }}</h4>
+      <p class="text-muted mb-0 fs-6">{{ task.description }}</p>
+    </div>
+
+    <button
+      mat-icon-button
+      color="primary"
+      (click)="openTodoDialog(task)"
+      class="me-2"
+    >
+      <mat-icon>edit</mat-icon>
+    </button>
+
+    <button mat-icon-button color="warn" (click)="deleteTask(task.id!)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  }
+</div>
