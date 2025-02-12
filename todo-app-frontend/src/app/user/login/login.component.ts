@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../shared/services/auth.service';
+import { Constants } from '../../constants/constants';
 
 @Component({
   selector: 'app-login',
@@ -42,22 +43,14 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      this.isLoading = true;
-      this.errorMessage = null;
-
-      this.authService.login(this.loginForm.value).subscribe({
-        next: (response: any) => {
-          console.log('Login successful', response);
-          this.router.navigate(['/home']);
-        },
-        error: (error: any) => {
-          console.error('Login failed', error);
-          this.errorMessage = 'Invalid email or password';
-          this.isLoading = false;
-        },
-        complete: () => {
-          this.isLoading = false;
-        },
+      this.authService.login(this.loginForm.value).subscribe((res: any) => {
+        if (res.result) {
+          alert('Login successful!');
+          localStorage.setItem(Constants.ACCESS_TOKEN, res.data.token);
+          this.router.navigateByUrl('tasks');
+        } else {
+          alert('Login failed!');
+        }
       });
     }
   }
