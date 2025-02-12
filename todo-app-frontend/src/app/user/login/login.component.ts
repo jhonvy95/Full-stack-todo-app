@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthService } from '../../shared/services/auth.service';
+import { AuthService } from '../../core/services/auth.service';
 import { Constants } from '../../constants/constants';
 
 @Component({

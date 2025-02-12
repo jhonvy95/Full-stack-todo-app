@@ -1,5 +1,5 @@
 import { HttpInterceptorFn } from '@angular/common/http';
-import { Constants } from '../constants/constants';
+import { Constants } from '../../constants/constants';
 
 export const httpInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorage.getItem(Constants.ACCESS_TOKEN);

@@ -1,0 +1,81 @@
+<h2 mat-dialog-title>{{ data.task ? "Edit Task" : "Add Task" }}</h2>
+<mat-dialog-content>
+  <form class="todo-form" [formGroup]="todoForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="w-100 mb-3">
+      <mat-label>Title</mat-label>
+      <input matInput formControlName="title" required />
+      <mat-error
+        *ngIf="
+          todoForm.controls['title'].invalid &&
+          todoForm.controls['title'].touched
+        "
+      >
+        Title is required (Max: 50 characters)
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mb-3">
+      <mat-label>Desc ription</mat-label>
+      <textarea matInput formControlName="description" required></textarea>
+      <mat-error
+        *ngIf="
+          todoForm.controls['description'].invalid &&
+          todoForm.controls['description'].touched
+        "
+      >
+        Description is required (Max: 200 characters)
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mb-3">
+      <mat-label>Due Date</mat-label>
+      <input
+        matInput
+        [matDatepicker]="picker"
+        formControlName="dueDate"
+        required
+      />
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="picker"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error
+        *ngIf="
+          todoForm.controls['dueDate'].invalid &&
+          todoForm.controls['dueDate'].touched
+        "
+      >
+        Due Date is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 mb-3">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status">
+        <mat-option *ngFor="let status of statusOptions" [value]="status">
+          {{ status }}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="
+          todoForm.controls['status'].invalid &&
+          todoForm.controls['status'].touched
+        "
+      >
+        Status is required
+      </mat-error>
+    </mat-form-field>
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="todoForm.invalid"
+      >
+        {{ data.task ? "Update" : "Add" }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>
