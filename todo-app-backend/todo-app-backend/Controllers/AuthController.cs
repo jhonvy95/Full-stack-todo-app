@@ -49,7 +49,12 @@ namespace todo_app_backend.Controllers
             if (!passwordValid) return Unauthorized("Invalid credentials");
 
             var token = GenerateJwtToken(user);
-            return Ok(new { token });
+            return Ok(new
+            {
+                message = "Login Success",
+                result = true,
+                data = new { token }
+            });
         }
 
         private string GenerateJwtToken(User user)
