@@ -10,6 +10,6 @@
         public DateTime DueDate { get; set; }
 
         public int UserID { get; set; } 
-        public required User User { get; set; }
+        public User? User { get; set; }
     }
 }

@@ -27,7 +27,7 @@ builder.Services.AddIdentity<User, IdentityRole<int>>(options =>
 
 // Setting up authentication with JWT
 
-var key = Encoding.UTF8.GetBytes("SuperClaveSecreta123!"); 
+var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key is missing"));
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -40,10 +40,11 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         IssuerSigningKey = new SymmetricSecurityKey(key),
-        ValidateAudience = true,
-        ValidateIssuerSigningKey = true,
+        ValidateIssuer = false,
+        ValidateAudience = false,
         ValidateLifetime = true,
-        ValidateIssuer = true,
+        ValidateIssuerSigningKey = true,
+        ClockSkew = TimeSpan.Zero
     };
 });
 
