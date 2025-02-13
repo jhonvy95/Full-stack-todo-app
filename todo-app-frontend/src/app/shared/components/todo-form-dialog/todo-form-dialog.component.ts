@@ -19,6 +19,7 @@ import {
 } from '@angular/forms';
 import { TaskService } from '../../../core/services/task.service';
 import { Task } from '../../../core/dto/task.dto';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-todo-form-dialog',
@@ -75,7 +76,7 @@ export class TodoFormDialogComponent {
           (res: any) => {
             if (res.result) {
               this.dialogRef.close();
-              alert('Task updated successfully');
+              Swal.fire('Task updated successfully!', '', 'success');
             }
           },
           (error) => {
@@ -84,6 +85,7 @@ export class TodoFormDialogComponent {
         );
       } else {
         this.taskService.addTask(taskData).subscribe(() => {
+          Swal.fire('Task created successfully!', '', 'success');
           this.dialogRef.close(taskData);
         });
       }

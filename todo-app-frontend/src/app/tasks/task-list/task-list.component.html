@@ -22,7 +22,15 @@
       <mat-icon style="color: rgb(80, 91, 235)">edit</mat-icon>
     </button>
 
-    <button mat-icon-button (click)="OndeleteTask(task.id!)">
+    <button
+      mat-icon-button
+      [swal]="{
+        title: 'Delete Task',
+        text: 'Are you sure you want to delete this task?',
+        showCancelButton: true
+      }"
+      (confirm)="OndeleteTask(task.id!)"
+    >
       <mat-icon style="color: rgb(238, 115, 93)">delete</mat-icon>
     </button>
   </div>

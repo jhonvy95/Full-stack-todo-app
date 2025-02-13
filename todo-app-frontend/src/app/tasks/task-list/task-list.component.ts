@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { TodoFormDialogComponent } from '../../shared/components/todo-form-dialog/todo-form-dialog.component';
 import { TaskService } from '../../core/services/task.service';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-task-list',
@@ -22,6 +24,7 @@ import { TaskService } from '../../core/services/task.service';
     ReactiveFormsModule,
     MatOption,
     MatIconModule,
+    SweetAlert2Module,
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css',
@@ -53,7 +56,7 @@ export class TaskListComponent {
   OndeleteTask(id: number): void {
     this.taskService.deleteTask(id).subscribe((res: any) => {
       if (res.result) {
-        alert('Task deleted successfully!');
+        Swal.fire('Task deleted successfully!', '', 'success');
       }
       this.refreshTasks();
     });
