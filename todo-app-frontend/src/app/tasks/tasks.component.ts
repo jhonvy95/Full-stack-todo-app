@@ -8,6 +8,8 @@ import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatOption, MatSelectModule } from '@angular/material/select';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-tasks',
@@ -18,6 +20,9 @@ import { MatButtonModule } from '@angular/material/button';
     FormsModule,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule,
+    MatOption,
+    CommonModule,
   ],
   templateUrl: './tasks.component.html',
   styleUrl: './tasks.component.css',
@@ -26,6 +31,8 @@ export class TasksComponent {
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   filterText: string = '';
+  selectedStatus: string = '';
+  statusOptions: string[] = ['Pending', 'In Progress', 'Completed'];
 
   constructor(private taskService: TaskService, private dialog: MatDialog) {}
 
@@ -57,8 +64,13 @@ export class TasksComponent {
 
   applyFilter(): void {
     const filter = this.filterText.toLowerCase().trim();
-    this.filteredTasks = this.tasks.filter((task) =>
-      task.title.toLowerCase().includes(filter)
-    );
+
+    this.filteredTasks = this.tasks.filter((task) => {
+      const matchesText = task.title.toLowerCase().includes(filter);
+      const matchesStatus = this.selectedStatus
+        ? task.status === this.selectedStatus
+        : true;
+      return matchesText && matchesStatus;
+    });
   }
 }

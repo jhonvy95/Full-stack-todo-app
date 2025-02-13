@@ -1,48 +1,54 @@
 <div class="container d-flex flex-column align-items-center mt-5 gap-3">
-  @for (task of tasks; track $index) {
-
-  <div class="d-flex gap-3 shadow-sm p-3 rounded flex-grow-1">
-    <mat-form-field>
-      <mat-label>Status</mat-label>
-      <mat-select
-        [value]="task.status"
-        (selectionChange)="onStatusChange(task, $event.value)"
-      >
-        <mat-option *ngFor="let status of statusOptions" [value]="status">
-          {{ status }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <div class="flex-grow-1 full-width">
-      <h4
-        class="fs-5"
-        [ngClass]="{ 'completed-task': task.status === 'Completed' }"
-      >
-        {{ task.title }}
-      </h4>
-      <p
-        class="text-muted mb-0 fs-6"
-        [ngClass]="{ 'completed-task': task.status === 'Completed' }"
-      >
-        {{ task.description }}
-      </p>
-    </div>
-
-    <button mat-icon-button (click)="openTodoDialog(task)" class="me-2">
-      <mat-icon style="color: rgb(80, 91, 235)">edit</mat-icon>
-    </button>
-
-    <button
-      mat-icon-button
-      [swal]="{
-        title: 'Delete Task',
-        text: 'Are you sure you want to delete this task?',
-        showCancelButton: true
-      }"
-      (confirm)="OndeleteTask(task.id!)"
-    >
-      <mat-icon style="color: rgb(238, 115, 93)">delete</mat-icon>
-    </button>
+  <div *ngIf="tasks.length === 0" class="text-center text-muted">
+    <h4>No tasks available</h4>
+    <p>Start by adding a new task to get organized!</p>
   </div>
-  }
+
+  <ng-container *ngIf="tasks.length > 0">
+    @for (task of tasks; track $index) {
+    <div class="d-flex gap-3 shadow-sm p-3 rounded flex-grow-1">
+      <mat-form-field>
+        <mat-label>Status</mat-label>
+        <mat-select
+          [value]="task.status"
+          (selectionChange)="onStatusChange(task, $event.value)"
+        >
+          <mat-option *ngFor="let status of statusOptions" [value]="status">
+            {{ status }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div class="flex-grow-1 full-width">
+        <h4
+          class="fs-5"
+          [ngClass]="{ 'completed-task': task.status === 'Completed' }"
+        >
+          {{ task.title }}
+        </h4>
+        <p
+          class="text-muted mb-0 fs-6"
+          [ngClass]="{ 'completed-task': task.status === 'Completed' }"
+        >
+          {{ task.description }}
+        </p>
+      </div>
+
+      <button mat-icon-button (click)="openTodoDialog(task)" class="me-2">
+        <mat-icon style="color: rgb(80, 91, 235)">edit</mat-icon>
+      </button>
+
+      <button
+        mat-icon-button
+        [swal]="{
+          title: 'Delete Task',
+          text: 'Are you sure you want to delete this task?',
+          showCancelButton: true
+        }"
+        (confirm)="OndeleteTask(task.id!)"
+      >
+        <mat-icon style="color: rgb(238, 115, 93)">delete</mat-icon>
+      </button>
+    </div>
+    }
+  </ng-container>
 </div>

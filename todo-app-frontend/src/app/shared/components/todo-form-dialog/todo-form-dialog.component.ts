@@ -41,7 +41,8 @@ import Swal from 'sweetalert2';
 })
 export class TodoFormDialogComponent {
   todoForm: FormGroup;
-  statusOptions: string[] = ['Pending', 'In Progress', 'Completed']; // Opciones del select
+  minDate: Date = new Date();
+  statusOptions: string[] = ['Pending', 'In Progress', 'Completed'];
 
   constructor(
     public dialogRef: MatDialogRef<TodoFormDialogComponent>,

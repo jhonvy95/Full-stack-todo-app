@@ -11,6 +11,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { Constants } from '../../constants/constants';
 import { RouterModule } from '@angular/router';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +24,7 @@ import Swal from 'sweetalert2';
     ReactiveFormsModule,
     HttpClientModule,
     RouterModule,
+    CommonModule,
   ],
   providers: [AuthService],
   templateUrl: './login.component.html',
