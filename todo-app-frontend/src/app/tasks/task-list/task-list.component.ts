@@ -40,9 +40,7 @@ export class TaskListComponent {
   constructor(private taskService: TaskService, private dialog: MatDialog) {}
 
   statusOptions: string[] = ['Pending', 'In Progress', 'Completed'];
-  ngOnInit() {
-    console.log(this.tasks);
-  }
+
   onStatusChange(task: Task, newStatus: string): void {
     const updatedTask: Task = { ...task, status: newStatus };
 

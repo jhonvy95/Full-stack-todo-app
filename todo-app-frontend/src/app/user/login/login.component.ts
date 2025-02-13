@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../core/services/auth.service';
 import { Constants } from '../../constants/constants';
+import { RouterModule } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +22,7 @@ import { Constants } from '../../constants/constants';
     MatButtonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    RouterModule,
   ],
   providers: [AuthService],
   templateUrl: './login.component.html',
@@ -45,11 +48,11 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe((res: any) => {
         if (res.result) {
-          alert('Login successful!');
+          Swal.fire('Logged in successfully!', 'success');
           localStorage.setItem(Constants.ACCESS_TOKEN, res.data.token);
           this.router.navigateByUrl('tasks');
         } else {
-          alert('Login failed!');
+          Swal.fire('Error', 'Invalid email or password.', 'error');
         }
       });
     }
