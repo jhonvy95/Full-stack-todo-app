@@ -18,17 +18,12 @@
       <p class="text-muted mb-0 fs-6">{{ task.description }}</p>
     </div>
 
-    <button
-      mat-icon-button
-      color="primary"
-      (click)="openTodoDialog(task)"
-      class="me-2"
-    >
-      <mat-icon>edit</mat-icon>
+    <button mat-icon-button (click)="openTodoDialog(task)" class="me-2">
+      <mat-icon style="color: rgb(80, 91, 235)">edit</mat-icon>
     </button>
 
-    <button mat-icon-button color="warn" (click)="OndeleteTask(task.id!)">
-      <mat-icon>delete</mat-icon>
+    <button mat-icon-button (click)="OndeleteTask(task.id!)">
+      <mat-icon style="color: rgb(238, 115, 93)">delete</mat-icon>
     </button>
   </div>
   }

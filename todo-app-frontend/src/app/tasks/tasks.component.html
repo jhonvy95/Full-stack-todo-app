@@ -1,15 +1,26 @@
-<div class="container d-flex flex-column align-items-center mt-5">
+<div class="container d-flex flex-column align-items-center mt-5 w-75">
   <h1 class="text-center mb-4">Task List</h1>
 
-  <div class="mb-4">
-    <button mat-raised-button color="primary" (click)="openTodoDialog()">
-      Add Todo
-    </button>
+  <div class="container d-flex justify-content-between">
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Search Task</mat-label>
+        <input
+          matInput
+          [(ngModel)]="filterText"
+          (ngModelChange)="onFilterChange()"
+          placeholder="Type to search..."
+        />
+      </mat-form-field>
+    </div>
+    <div class="mb-4">
+      <button mat-flat-button (click)="openTodoDialog()">Add Todo</button>
+    </div>
   </div>
 
   <div class="w-100">
     <app-task-list
-      [tasks]="tasks"
+      [tasks]="filteredTasks"
       [refreshTasks]="refreshTasks"
     ></app-task-list>
   </div>
