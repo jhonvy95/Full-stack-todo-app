@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, inject } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -7,6 +7,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatOption, MatSelect } from '@angular/material/select';
 import { Task } from '../../core/dto/task.dto';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { TodoFormDialogComponent } from '../../shared/components/todo-form-dialog/todo-form-dialog.component';
+import { TaskService } from '../../core/services/task.service';
 
 @Component({
   selector: 'app-task-list',
@@ -25,7 +28,10 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class TaskListComponent {
   @Input() tasks: Task[] = [];
+  @Input() refreshTasks: () => void = () => {};
   @Output() statusChanged = new EventEmitter<{ id: number; status: string }>();
+
+  constructor(private taskService: TaskService, private dialog: MatDialog) {}
 
   statusOptions: string[] = ['Pending', 'In Progress', 'Completed'];
 
@@ -34,10 +40,22 @@ export class TaskListComponent {
   }
 
   openTodoDialog(task: Task): void {
-    // Lógica para abrir el modal de edición
+    const dialogRef = this.dialog.open(TodoFormDialogComponent, {
+      width: '400px',
+      data: { task },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.refreshTasks();
+    });
   }
 
-  deleteTask(id: number): void {
-    // Lógica para eliminar tarea
+  OndeleteTask(id: number): void {
+    this.taskService.deleteTask(id).subscribe((res: any) => {
+      if (res.result) {
+        alert('Task deleted successfully!');
+      }
+      this.refreshTasks();
+    });
   }
 }

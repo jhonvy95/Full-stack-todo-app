@@ -22,36 +22,8 @@ export class TasksComponent {
       data: { task },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        if (task) {
-          // Actualizar tarea
-          const updatedTask: Task = {
-            ...task,
-            title: result.title,
-            description: result.description,
-            status: result.status,
-            dueDate: result.dueDate,
-          };
-
-          this.taskService.updateTask(updatedTask).subscribe(() => {
-            this.refreshTasks();
-          });
-        } else {
-          // Agregar nueva tarea
-          const newTask: Task = {
-            title: result.title,
-            description: result.description,
-            status: result.status,
-            createdDate: new Date(),
-            dueDate: result.dueDate,
-          };
-
-          this.taskService.addTask(newTask).subscribe(() => {
-            this.refreshTasks();
-          });
-        }
-      }
+    dialogRef.afterClosed().subscribe(() => {
+      this.refreshTasks();
     });
   }
 

@@ -64,24 +64,29 @@ export class TodoFormDialogComponent {
 
   onSubmit(): void {
     if (this.todoForm.valid) {
-      console.log('Formulario enviado:', this.todoForm.value);
       const taskData: Task = {
+        id: this.data.task?.id ?? null,
+        userID: this.data.task?.userID,
         ...this.todoForm.value,
       };
 
-      console.log('Datos enviados:', taskData);
-
-      if (this.data.task) {
-        this.taskService.updateTask(taskData);
+      if (this.data.task?.id) {
+        this.taskService.updateTask(taskData).subscribe(
+          (res: any) => {
+            if (res.result) {
+              this.dialogRef.close();
+              alert('Task updated successfully');
+            }
+          },
+          (error) => {
+            alert('Error updating task');
+          }
+        );
       } else {
-        this.taskService.addTask(taskData);
+        this.taskService.addTask(taskData).subscribe(() => {
+          this.dialogRef.close(taskData);
+        });
       }
-
-      this.dialogRef.close(taskData);
     }
-  }
-
-  onCancel(): void {
-    this.dialogRef.close();
   }
 }

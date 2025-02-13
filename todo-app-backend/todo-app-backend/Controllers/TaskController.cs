@@ -77,7 +77,11 @@ namespace todo_app_backend.Controllers
             task.DueDate = taskDto.DueDate;
 
             await _context.SaveChangesAsync();
-            return NoContent();
+             return Ok(new
+            {
+                message = "Task Updated Successfully",
+                result = true,
+                });
         }
 
         [HttpDelete("{id}")]
@@ -89,7 +93,12 @@ namespace todo_app_backend.Controllers
 
             _context.Tasks.Remove(task);
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(new
+            {
+                message = "Task Deleted Successfully",
+                result = true,
+            });
         }
     }
-}
+ }
+

@@ -12,8 +12,6 @@ export class TaskService {
   constructor(private http: HttpClient) {}
 
   addTask(task: Task): Observable<Task> {
-    console.log('Task:', task);
-
     return this.http.post<Task>(this.apiUrl, task);
   }
 
@@ -21,10 +19,14 @@ export class TaskService {
     if (!task.id) {
       throw new Error('Task ID is required for update');
     }
-    return this.http.put<Task>(`${this.apiUrl}/${task.id}`, task);
+    return this.http.put<any>(`${this.apiUrl}/${task.id}`, task);
   }
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.apiUrl);
+  }
+
+  deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }
