@@ -1,7 +1,7 @@
 <div class="container d-flex flex-column align-items-center mt-5 gap-3">
   @for (task of tasks; track $index) {
 
-  <div class="full-width d-flex gap-3 shadow-sm p-3 rounded">
+  <div class="d-flex gap-3 shadow-sm p-3 rounded flex-grow-1">
     <mat-form-field>
       <mat-label>Status</mat-label>
       <mat-select
@@ -13,9 +13,19 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <div class="flex-grow-1" style="width: 250px">
-      <h4 class="fs-5">{{ task.title }}</h4>
-      <p class="text-muted mb-0 fs-6">{{ task.description }}</p>
+    <div class="flex-grow-1 full-width">
+      <h4
+        class="fs-5"
+        [ngClass]="{ 'completed-task': task.status === 'Completed' }"
+      >
+        {{ task.title }}
+      </h4>
+      <p
+        class="text-muted mb-0 fs-6"
+        [ngClass]="{ 'completed-task': task.status === 'Completed' }"
+      >
+        {{ task.description }}
+      </p>
     </div>
 
     <button mat-icon-button (click)="openTodoDialog(task)" class="me-2">

@@ -12,6 +12,7 @@ import { TodoFormDialogComponent } from '../../shared/components/todo-form-dialo
 import { TaskService } from '../../core/services/task.service';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
+import { NgFor, CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-task-list',
@@ -25,6 +26,8 @@ import Swal from 'sweetalert2';
     MatOption,
     MatIconModule,
     SweetAlert2Module,
+    NgFor,
+    CommonModule,
   ],
   templateUrl: './task-list.component.html',
   styleUrl: './task-list.component.css',
@@ -37,9 +40,21 @@ export class TaskListComponent {
   constructor(private taskService: TaskService, private dialog: MatDialog) {}
 
   statusOptions: string[] = ['Pending', 'In Progress', 'Completed'];
-
+  ngOnInit() {
+    console.log(this.tasks);
+  }
   onStatusChange(task: Task, newStatus: string): void {
-    this.statusChanged.emit({ id: task.id!, status: newStatus });
+    const updatedTask: Task = { ...task, status: newStatus };
+
+    this.taskService.updateTask(updatedTask).subscribe({
+      next: () => {
+        Swal.fire('Task status updated successfully!', '', 'success');
+        this.refreshTasks();
+      },
+      error: () => {
+        Swal.fire('Error updating task status', '', 'error');
+      },
+    });
   }
 
   openTodoDialog(task: Task): void {
